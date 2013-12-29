@@ -1,7 +1,7 @@
 {
   "name": "log-timeline",
   "version": "0.0.1",
-  "description": "git/svn log timeline web show",
+  "description": "svn log timeline web show",
   "main": "index.js",
   "scripts": {
     "test": "test.js"
@@ -16,7 +16,7 @@
     "log",
     "timeline"
   ],
-  "author": "Nightink",
+  "author": "Nightink<chceyes@gmail.com>",
   "dependencies": {
     "commander": "~2.0",
     "moment": ">=2.0",

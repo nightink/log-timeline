@@ -1,7 +1,11 @@
-#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
 
 var fs          = require('fs');
 var path        = require('path');
+var exec        = require('child_process').exec;
 
 var moment      = require('moment');
 var express     = require('express');
@@ -9,7 +13,7 @@ var program     = require('commander');
 var parseString = require('xml2js').parseString;
 
 var app         = express();
-var exec        = require('./exec.js');
+
 
 var cwd         = process.cwd();
 
