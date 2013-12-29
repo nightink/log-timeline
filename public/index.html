@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>svn log timeline</title>
+    <link rel="stylesheet" type="text/css" href="timeline.css">   
+
+    <script id="jquery_183" type="text/javascript" class="library" src="jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div id="timeline">
+        <!-- Timeline.js will genereate the markup here -->
+    </div>
+    
+    <script>
+
+        (function($) {
+
+            var timeline = new VMM.Timeline();
+            
+            timeline.init("data.json");
+
+        })(jQuery);
+
+    </script>
+</body>
+</html>

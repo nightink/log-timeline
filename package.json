@@ -1,0 +1,31 @@
+{
+  "name": "log-timeline",
+  "version": "0.0.1",
+  "description": "git/svn log timeline web show",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nightink/log-timeline"
+  },
+  "keywords": [
+    "git",
+    "svn",
+    "log",
+    "timeline"
+  ],
+  "author": "Nightink",
+  "dependencies": {
+    "commander": "~2.0",
+    "moment": ">=2.0",
+    "express": "~3.0",
+    "xml2js": ">=0.4"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nightink/log-timeline/issues"
+  },
+  "homepage": "https://github.com/Nightink/log-timeline"
+}
