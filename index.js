@@ -14,10 +14,7 @@ var program     = require('commander');
 var parseString = require('xml2js').parseString;
 
 var app         = express();
-
-
 var cwd         = process.cwd();
-
 var currYear    = moment().format('YYYY');
 
 program
@@ -30,7 +27,7 @@ console.log('svn 日志签入记录生成中...');
 exec('svn log --xml', {cwd: cwd}, function(err, data, stderr) {
 
   parseString(data, function (err, result) {
-  
+
     if(err) {
 
       return;

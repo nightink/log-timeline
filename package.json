@@ -1,6 +1,6 @@
 {
   "name": "log-timeline",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "svn log timeline web show",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "xml2js": ">=0.4"
   },
   "bin": {
-    "log-timeline": "./index"
+    "log-timeline": "./bin/log-timeline"
   },
   "license": "MIT",
   "bugs": {
