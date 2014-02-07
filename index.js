@@ -18,17 +18,22 @@ var cwd         = process.cwd();
 var currYear    = moment().format('YYYY');
 
 program
-  .version(require('./package.json').version)
   .option('-p, --port [port]', '设置预览端口', Number, 4000)
+  .version(require('./package.json').version)
   .parse(process.argv);
 
 console.log('svn 日志签入记录生成中...');
 
 exec('svn log --xml', {cwd: cwd}, function(err, data, stderr) {
 
-  parseString(data, function (err, result) {
+  if(err) {
 
-    if(err) {
+    return console.log(err);
+  }
+
+  parseString(data, function (error, result) {
+
+    if(error) {
 
       return;
     }
