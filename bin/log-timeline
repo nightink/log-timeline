@@ -13,13 +13,12 @@ var express     = require('express');
 var program     = require('commander');
 var parseString = require('xml2js').parseString;
 
-var app         = express();
 var cwd         = process.cwd();
 var currYear    = moment().format('YYYY');
 
 program
   .option('-p, --port [port]', '设置预览端口', Number, 4000)
-  .version(require('./package.json').version)
+  .version(require('../package.json').version)
   .parse(process.argv);
 
 console.log('svn 日志签入记录生成中...');
@@ -62,11 +61,13 @@ exec('svn log --xml', {cwd: cwd}, function(err, data, stderr) {
       }
     };
 
-    fs.writeFileSync(path.join(__dirname, 'public/data.json'), JSON.stringify(dataStr));
+    fs.writeFileSync(path.join(__dirname, '../public/data.json'), JSON.stringify(dataStr));
 
     console.log('svn 日志签入记录生成完毕.');
 
-    app.use(express.static(path.join(__dirname, 'public')));
+    var app = express();
+
+    app.use(express.static(path.join(__dirname, '../public')));
     app.set('port', program.port);
 
     // 启动server, 监听端口

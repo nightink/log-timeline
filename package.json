@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Nightink/log-timeline"
+    "url": "https://github.com/Bluefatty/log-timeline"
   },
   "keywords": [
     "git",
@@ -28,7 +28,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Nightink/log-timeline/issues"
+    "url": "https://github.com/Bluefatty/log-timeline/issues"
   },
-  "homepage": "https://github.com/Nightink/log-timeline"
+  "homepage": "https://github.com/Bluefatty/log-timeline"
 }

@@ -11,3 +11,4 @@ logs
 results
 lib-cov
 node_modules
+data.json
