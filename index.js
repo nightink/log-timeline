@@ -9,76 +9,116 @@ var path        = require('path');
 var exec        = require('child_process').exec;
 
 var moment      = require('moment');
-var express     = require('express');
+var connect     = require('connect');
 var program     = require('commander');
 var parseString = require('xml2js').parseString;
 
 var cwd         = process.cwd();
 var currYear    = moment().format('YYYY');
+var isDir       = fs.existsSync || path.existsSync;
 
 program
   .option('-p, --port [port]', '设置预览端口', Number, 4000)
   .version(require('../package.json').version)
   .parse(process.argv);
 
-console.log('svn 日志签入记录生成中...');
+console.log('日志签入记录生成中...');
 
-exec('svn log --xml', {cwd: cwd}, function(err, data, stderr) {
+function gitLog() {
 
-  if(err) {
+  exec('git log --pretty=format:"%an|%ad|%s"', {cwd: cwd}, function(err, data, stderr) {
 
-    return console.log(err);
-  }
+    if(err) {
 
-  parseString(data, function (error, result) {
-
-    if(error) {
-
-      return;
+      return console.log(err);
     }
 
     var dataLog = [];
 
-    result.log.logentry.forEach(function(data) {
+    data.split('\n').forEach(function(d) {
 
-      var sDate = moment(data.date[0]).format('YYYY,MM,DD,HH,mm,ss');
+      var _d = d.split('|');
+
+      var sDate = moment(_d[1]).format('YYYY,MM,DD,HH,mm,ss');
 
       dataLog.push({
 
-        headline: data.author[0] + data.msg[0],
+        headline: _d[0] + ' ' + _d[2],
         startDate: sDate,
-        message: data.msg[0]
+        message: _d[2]
       });
     });
 
-    var dataStr = {
-      timeline: {
-        headline: 'svn log',
-        type: 'default',
-        startDate: currYear,
-        text: '<i><span class="c1">Designed</span> by <span class="c2">CHC</span></i>',
-        date: dataLog
-      }
-    };
+    startServer(dataLog);
+  });
+}
 
-    fs.writeFileSync(path.join(__dirname, '../public/data.json'), JSON.stringify(dataStr));
+function svnLog() {
 
-    console.log('svn 日志签入记录生成完毕.');
+  exec('svn log --xml', {cwd: cwd}, function(err, data, stderr) {
 
-    var app = express();
+    if(err) {
 
-    app.use(express.static(path.join(__dirname, '../public')));
-    app.set('port', program.port);
+      return console.log(err);
+    }
 
-    // 启动server, 监听端口
-    app.listen(app.get('port'), function(err) {
+    parseString(data, function (error, result) {
 
-      if(err) {
-        console.log(err.message);
+      if(error) {
+
         return;
       }
-      console.log('请访问 http://localhost:%s/ 查看签入时间线', app.get('port'));
-    });
 
+      var dataLog = [];
+
+      result.log.logentry.forEach(function(log) {
+
+        var sDate = moment(log.date[0]).format('YYYY,MM,DD,HH,mm,ss');
+
+        dataLog.push({
+
+          headline: log.author[0] + log.msg[0],
+          startDate: sDate,
+          message: log.msg[0]
+        });
+      });
+
+      startServer(dataLog);
+    });
   });
-});
+}
+
+function startServer(dataLog) {
+
+  var dataStr = {
+    timeline: {
+      headline: 'log',
+      type: 'default',
+      startDate: currYear,
+      text: '<i><span class="c1">Designed</span> by <span class="c2">Nightink</span></i>',
+      date: dataLog
+    }
+  };
+
+  fs.writeFileSync(path.join(__dirname, '../public/data.json'), JSON.stringify(dataStr, null, 2));
+
+  console.log('日志签入记录生成完毕.');
+
+  var app = connect();
+
+  app.use(connect.static(path.join(__dirname, '../public')));
+
+  // 启动server, 监听端口
+  app.listen(program.port, function(err) {
+
+    if(err) {
+      console.log(err.message);
+      return;
+    }
+    console.log('请访问 http://localhost:%s/ 查看签入时间线', program.port);
+  });
+}
+
+isDir('.git') ?
+  gitLog() :
+  svnLog();

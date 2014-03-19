@@ -1,12 +1,16 @@
 log-timeline
 ============
 
-svn log timeline web show
+>svn/git log timeline web show
 
-###img
+### Use
+
+`npm install -g log-timeline`
+
+### img
 
 ![](./doc/show.jpg)
 
-##Thank
+## Thank
 
 [TimelineJS](https://github.com/NUKnightLab/TimelineJS)
