@@ -9,7 +9,7 @@ log-timeline
 
 ### img
 
-![](./doc/show.jpg)
+![image show](doc/show.jpg)
 
 ## Thank
 

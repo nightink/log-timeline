@@ -19,7 +19,7 @@ var isDir       = fs.existsSync || path.existsSync;
 
 program
   .option('-p, --port [port]', '设置预览端口', Number, 4000)
-  .version(require('../package.json').version)
+  .version(require('./package.json').version)
   .parse(process.argv);
 
 console.log('日志签入记录生成中...');
@@ -100,13 +100,13 @@ function startServer(dataLog) {
     }
   };
 
-  fs.writeFileSync(path.join(__dirname, '../public/data.json'), JSON.stringify(dataStr, null, 2));
+  fs.writeFileSync(path.join(__dirname, 'public/data.json'), JSON.stringify(dataStr, null, 2));
 
   console.log('日志签入记录生成完毕.');
 
   var app = connect();
 
-  app.use(connect.static(path.join(__dirname, '../public')));
+  app.use(connect.static(path.join(__dirname, 'public')));
 
   // 启动server, 监听端口
   app.listen(program.port, function(err) {

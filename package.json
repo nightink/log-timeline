@@ -1,6 +1,6 @@
 {
   "name": "log-timeline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "svn/git log timeline web show",
   "main": "index.js",
   "scripts": {
