@@ -9,7 +9,7 @@ log-timeline
 
 ### img
 
-![image show](doc/show.jpg)
+![image show](https://github.com/Bluefatty/log-timeline/raw/master/doc/show.jpg)
 
 ## Thank
 

@@ -6,10 +6,11 @@
 
 var fs          = require('fs');
 var path        = require('path');
+var http        = require('http');
 var exec        = require('child_process').exec;
 
 var moment      = require('moment');
-var connect     = require('connect');
+var staticServe = require('serve-static');
 var program     = require('commander');
 var parseString = require('xml2js').parseString;
 
@@ -106,12 +107,20 @@ function startServer(dataLog) {
 
   console.log('日志签入记录生成完毕.');
 
-  var app = connect();
+  var options = {
+    'index': 'index.html'
+  }
 
-  app.use(connect.static(logStaticPath));
+  http.createServer(function(req, res){
 
-  // 启动server, 监听端口
-  app.listen(program.port, function(err) {
+    staticServe(logStaticPath, options)(req, res, function(err) {
+
+      if(!err) {
+
+        res.end('<h2>404: not found</h2>');
+      }
+    });
+  }).listen(program.port, function(err) {
 
     if(err) {
       console.log(err.message);
