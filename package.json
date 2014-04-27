@@ -1,6 +1,6 @@
 {
   "name": "log-timeline",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "svn/git log timeline web show",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,9 @@
   },
   "bin": {
     "log-timeline": "./bin/log-timeline"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
   },
   "license": "MIT",
   "bugs": {

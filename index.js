@@ -17,6 +17,8 @@ var cwd         = process.cwd();
 var currYear    = moment().format('YYYY');
 var isDir       = fs.existsSync || path.existsSync;
 
+var logStaticPath = path.join(process.env.HOME, '.log-timeline');
+
 program
   .option('-p, --port [port]', '设置预览端口', Number, 4000)
   .version(require('./package.json').version)
@@ -100,13 +102,13 @@ function startServer(dataLog) {
     }
   };
 
-  fs.writeFileSync(path.join(__dirname, 'public/data.json'), JSON.stringify(dataStr, null, 2));
+  fs.writeFileSync(path.join(logStaticPath, 'data.json'), JSON.stringify(dataStr, null, 2));
 
   console.log('日志签入记录生成完毕.');
 
   var app = connect();
 
-  app.use(connect.static(path.join(__dirname, 'public')));
+  app.use(connect.static(logStaticPath));
 
   // 启动server, 监听端口
   app.listen(program.port, function(err) {
