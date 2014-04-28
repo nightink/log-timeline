@@ -1,4 +1,4 @@
-log-timeline
+log-timeline [![NPM version](https://badge.fury.io/js/log-timeline@2x.png)](http://badge.fury.io/js/log-timeline)
 ============
 
 >svn/git log timeline web show
