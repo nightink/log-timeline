@@ -27,7 +27,8 @@
     "log-timeline": "./bin/log-timeline"
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "uninstall": "node scripts/uninstall.js"
   },
   "license": "MIT",
   "bugs": {
