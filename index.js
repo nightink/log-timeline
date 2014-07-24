@@ -127,6 +127,7 @@ function startServer(dataLog) {
       return;
     }
     console.log('请访问 http://localhost:%s/ 查看签入时间线', program.port);
+    exec('open http://127.0.0.1:' + program.port);
   });
 }
 

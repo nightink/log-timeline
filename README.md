@@ -1,15 +1,14 @@
-log-timeline [![NPM version](https://badge.fury.io/js/log-timeline@2x.png)](http://badge.fury.io/js/log-timeline)
+log-timeline
 ============
 
->svn/git log timeline web show
+[![NPM version](http://img.shields.io/npm/v/log-timeline.svg?style=flat)](https://www.npmjs.org/package/log-timeline)
+
+svn/git log timeline web show
+![image show](https://github.com/Bluefatty/log-timeline/raw/master/doc/show.jpg)
 
 ### Use
 
 `npm install -g log-timeline`
-
-### img
-
-![image show](https://github.com/Bluefatty/log-timeline/raw/master/doc/show.jpg)
 
 ## Thank
 
