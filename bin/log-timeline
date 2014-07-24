@@ -4,4 +4,11 @@
  * Module dependencies.
  */
 
-require('..');
+var program = require('commander');
+
+program
+  .option('-p, --port [port]', '设置预览端口', Number, 4000)
+  .version(require('../package.json').version)
+  .parse(process.argv);
+
+require('..')(program);
