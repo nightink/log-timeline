@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var program = require('commander');
+const program = require('commander');
 
 program
   .option('-p, --port [port]', '设置预览端口', Number, 4000)

@@ -3,36 +3,36 @@
   "version": "0.2.0",
   "description": "svn/git log timeline web show",
   "main": "index.js",
-  "scripts": {
-    "test": "test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Bluefatty/log-timeline"
-  },
   "keywords": [
     "git",
     "svn",
     "log",
     "timeline"
   ],
-  "author": "Nightink<chceyes@gmail.com>",
+  "author": "nightink<chceyes@gmail.com>",
+  "bin": {
+    "log-timeline": "./bin/log-timeline"
+  },
   "dependencies": {
     "commander": "~2.0",
-    "moment": "~2",
+    "dayjs": "^1.8.8",
     "serve-static": "~1.1",
     "xml2js": ">=0.4"
   },
-  "bin": {
-    "log-timeline": "./bin/log-timeline"
+  "engines": {
+    "node": ">= 4.0.0"
   },
   "scripts": {
     "postinstall": "node scripts/postinstall.js",
     "uninstall": "node scripts/uninstall.js"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Bluefatty/log-timeline/issues"
+  "homepage": "https://github.com/nightink/log-timeline",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nightink/log-timeline"
   },
-  "homepage": "https://github.com/Bluefatty/log-timeline"
+  "bugs": {
+    "url": "https://github.com/nightink/log-timeline/issues"
+  },
+  "license": "MIT"
 }

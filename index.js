@@ -1,89 +1,74 @@
-#!/usr/bin/env node
-
 'use strict';
 
 /**
  * Module dependencies.
  */
 
-var fs          = require('fs');
-var path        = require('path');
-var http        = require('http');
-var exec        = require('child_process').exec;
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+const exec = require('child_process').exec;
 
-var moment      = require('moment');
-var staticServe = require('serve-static');
-var parseString = require('xml2js').parseString;
+const dayjs = require('dayjs');
+const staticServe = require('serve-static');
 
-var cwd         = process.cwd();
-var currYear    = moment().format('YYYY');
-var isDir       = fs.existsSync || path.existsSync;
+const cwd = process.cwd();
+const currYear = dayjs(Date.now()).format('YYYY');
+const isDir = fs.existsSync || path.existsSync;
 
 module.exports = function(program) {
-
-  console.log('日志签入记录生成中...');
+  console.log('Check-in log records generated...');
 
   function startServer(dataLog) {
+    const logStaticPath = path.join(process.env.HOME, '.log-timeline');
 
-    var logStaticPath = path.join(process.env.HOME, '.log-timeline');
-
-    var options = {
+    const options = {
       'index': 'index.html'
     };
 
-    var dataStr = {
+    const dataStr = {
       timeline: {
         headline: 'log',
         type: 'default',
         startDate: currYear,
-        text: '<i><span class="c1">Designed</span> by <span class="c2">Nightink</span></i>',
+        text: '<i><span class="c1">Designed</span> by <span class="c2">nightink</span></i>',
         date: dataLog
       }
     };
 
     fs.writeFileSync(path.join(logStaticPath, 'data.json'), JSON.stringify(dataStr, null, 2));
 
-    console.log('日志签入记录生成完毕.');
+    console.log('Completed generating log records checked.');
 
     http.createServer(function(req, res){
-
       staticServe(logStaticPath, options)(req, res, function(err) {
-
         if(!err) {
-
           res.end('<h2>404: not found</h2>');
         }
       });
     }).listen(program.port, function(err) {
-
       if(err) {
         console.log(err.message);
         return;
       }
-      console.log('请访问 http://localhost:%s/ 查看签入时间线', program.port);
+      console.log('Please visit http://localhost:%s/ view check-in timeline', program.port);
       exec('open http://127.0.0.1:' + program.port);
     });
   }
 
   function gitLog() {
-
     exec('git log --pretty=format:"%an|%ad|%s"', {cwd: cwd}, function(err, data, stderr) {
-
       if(err) {
-
         return console.log(err);
       }
 
-      var dataLog = [];
+      const dataLog = [];
 
       data.split('\n').forEach(function(d) {
-
-        var _d = d.split('|');
-
-        var sDate = moment(_d[1]).format('YYYY,MM,DD,HH,mm,ss');
+        const _d = d.split('|');
+        const sDate = dayjs(_d[1]).format('YYYY,MM,DD,HH,mm,ss');
 
         dataLog.push({
-
           headline: _d[0] + ' ' + _d[2],
           startDate: sDate,
           message: _d[2]
@@ -95,29 +80,21 @@ module.exports = function(program) {
   }
 
   function svnLog() {
-
+    const parseString = require('xml2js').parseString;
     exec('svn log --xml', {cwd: cwd}, function(err, data, stderr) {
-
       if(err) {
-
         return console.log(err);
       }
 
       parseString(data, function (error, result) {
+        if(error) return;
 
-        if(error) {
-
-          return;
-        }
-
-        var dataLog = [];
+        const dataLog = [];
 
         result.log.logentry.forEach(function(log) {
-
-          var sDate = moment(log.date[0]).format('YYYY,MM,DD,HH,mm,ss');
+          const sDate = dayjs(log.date[0]).format('YYYY,MM,DD,HH,mm,ss');
 
           dataLog.push({
-
             headline: log.author[0] + log.msg[0],
             startDate: sDate,
             message: log.msg[0]
@@ -129,7 +106,5 @@ module.exports = function(program) {
     });
   }
 
-  isDir('.git') ?
-    gitLog() :
-    svnLog();
+  isDir('.git') ? gitLog() : svnLog();
 };
